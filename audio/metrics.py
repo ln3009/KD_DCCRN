@@ -106,5 +106,5 @@ def transform_pesq_range(pesq_score):
     """
     return (pesq_score + 0.5) / 5
 
-
+# 定义一个可用的评价指标列表
 REGISTERED_METRICS = ["SI_SDR", "STOI", "WB_PESQ", "NB_PESQ"]

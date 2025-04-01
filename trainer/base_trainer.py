@@ -36,22 +36,27 @@ class BaseTrainer:
         # get dataset iter
         self.train_iter = train_iter
         self.valid_iter = valid_iter
+
         # get meta args
         self.use_cudnn = False if self.device == "cpu" else config["meta"]["use_cudnn"]
         self.use_amp = False if self.device == "cpu" else config["meta"]["use_amp"]
+        
         # get base path
         self.base_path = config["path"]["base"]
         # get pre model path
         self.pre_model_path = config["path"]["pre_model"]
+
         # get ppl args
         self.n_folds = config["ppl"]["n_folds"]
         self.n_jobs = config["ppl"]["n_jobs"]
+
         # get visual args
         self.visual_samples = config["visual"]["samples"]
         # get checkpoint args
         self.save_checkpoint_interval = config["checkpoint"]["save_interval"]
         # get grad args
         self.clip_grad_norm_value = config["grad"]["clip_grad_norm_value"]
+
         # get dataset args
         self.sr = config["dataset"]["sr"]
         self.n_fft = config["dataset"]["n_fft"]
@@ -59,6 +64,7 @@ class BaseTrainer:
         self.hop_len = config["dataset"]["hop_len"]
         self.audio_len = config["dataset"]["audio_len"]
         self.window = torch.hann_window(self.win_len, periodic=False, device=self.device)
+        
         # get train args
         self.resume = config["train"]["resume"]
         self.epochs = config["train"]["epochs"]

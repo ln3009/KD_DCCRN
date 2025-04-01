@@ -8,15 +8,18 @@ from tqdm import tqdm
 
 
 def unzip(zip_path, unzip_path=None):
-    """unzip
+    """解压 ZIP 文件
 
     Args:
-        zip_path (str): zip path
-        unzip_path (str, optional): unzip path. Defaults to None.
+        zip_path (str): ZIP 文件路径
+        unzip_path (str, optional): 解压目标路径（默认与 ZIP 文件同名的文件夹）
 
     Returns:
-        unzip_path: unzip path
+        unzip_path: 解压目标路径
     """
+    # check zip file
+    if not os.path.exists(zip_path):
+        raise FileNotFoundError(f"文件 {zip_path} 不存在！")
 
     # set unzip path
     if unzip_path == None:
@@ -37,21 +40,23 @@ def prepare_empty_path(paths, resume=False):
     """prepare empty path
 
     Args:
-        paths (list): path list
-        resume (bool, optional): whether to resume. Defaults to False.
+        paths (list): 目录路径列表
+        resume (bool, optional): 是否为恢复训练模式，若为True则必须存在目录
     """
     for path in paths:
         if resume:
-            assert os.path.exists(path)
+            # assert os.path.exists(path)
+            if not os.path.exists(path):
+                raise FileNotFoundError(f"路径 {path} 不存在，无法恢复训练！")
         else:
-            os.makedirs(path, exist_ok=True)
+            os.makedirs(path, exist_ok=True) # 如果不存在，则创建目录
 
 
 def print_size_of_model(model):
-    """print size of model
+    """ 打印 PyTorch 模型大小（MB）
 
     Args:
-        model (torch.nn.Module): model
+        model (torch.nn.Module): 传入的 PyTorch 模型
     """
     torch.save(model.state_dict(), "temp.p")
     print("Size (MB):", os.path.getsize("temp.p") / 1e6)
@@ -59,10 +64,10 @@ def print_size_of_model(model):
 
 
 def print_networks(models: list):
-    """print networks
+     """打印多个 PyTorch 模型的参数量
 
     Args:
-        models (list): models list
+        models (list): PyTorch 模型列表
     """
     print(f"Contains {len(models)} models, the number of the parameters is: ")
 
