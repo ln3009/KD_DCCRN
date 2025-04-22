@@ -397,6 +397,7 @@ class BaseTrainer:
 if __name__ == "__main__":
     # when first tarining , you should prepare the dataset, run unzip.py and gen.py
     # python trainer/base_trainer.py -C config/base_config.toml
+    # tensorboard --logdir logs/train/base
     
     parser = argparse.ArgumentParser(description="knowledge distillation trainer")
     parser.add_argument("-C", "--config", required=True, type=str, help="Config (*.toml).")
