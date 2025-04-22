@@ -33,7 +33,7 @@ class DNS_Dataset(Dataset):
         # get path
         data_csv_path = os.path.join(set_path, mode + ".csv")
         # get noisy, clean files
-        noisy_clean_files = pd.read_csv(data_csv_path).values
+        noisy_clean_files = pd.read_csv(data_csv_path, header=None).values
         noisy_files = noisy_clean_files[:, 0].reshape(1, len(noisy_clean_files))[0]
         clean_files = noisy_clean_files[:, 1].reshape(1, len(noisy_clean_files))[0]
         # limit

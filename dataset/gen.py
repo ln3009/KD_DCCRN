@@ -52,7 +52,7 @@ def gen(set_path, config):
     train_files, valid_files, test_files = split_data(noisy_clean_files, valid_ratio=valid_ratio, test_ratio=test_ratio)
 
     # save set to csv
-    save_path = os.path.join(os.getcwd(), "dataset_csv")
+    save_path = os.path.join(os.getcwd(), "dataset_csv_1h")
     os.makedirs(save_path, exist_ok=True)
     df = pd.DataFrame(train_files)
     df.to_csv(os.path.join(save_path, "train.csv"), index=False, header=None)

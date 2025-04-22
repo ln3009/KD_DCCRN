@@ -64,7 +64,7 @@ def print_size_of_model(model):
 
 
 def print_networks(models: list):
-     """打印多个 PyTorch 模型的参数量
+    """打印多个 PyTorch 模型的参数量
 
     Args:
         models (list): PyTorch 模型列表

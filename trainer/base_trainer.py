@@ -14,6 +14,12 @@ from torch.utils.data import DataLoader
 from torch.cuda.amp import GradScaler, autocast
 from torch.utils.tensorboard import SummaryWriter
 
+# ====== Pillow 兼容性补丁 ======
+from PIL import Image
+if not hasattr(Image, "ANTIALIAS"):
+    Image.ANTIALIAS = Image.Resampling.LANCZOS
+# ===========================
+
 sys.path.append(os.getcwd())
 from dataset.dataset import DNS_Dataset
 from module.dc_crn import DCCRN
@@ -377,7 +383,8 @@ class BaseTrainer:
             # valid
             if epoch % self.valid_interval == 0 and epoch >= self.valid_start_epoch:
                 print(f"Train has finished, Valid is in progress...")
-
+                torch.cuda.empty_cache()
+                
                 self.set_model_to_eval_mode()
                 metric_score = self.valid_epoch(epoch)
 
@@ -388,13 +395,16 @@ class BaseTrainer:
 
 
 if __name__ == "__main__":
+    # when first tarining , you should prepare the dataset, run unzip.py and gen.py
+    # python trainer/base_trainer.py -C config/base_config.toml
+    
     parser = argparse.ArgumentParser(description="knowledge distillation trainer")
     parser.add_argument("-C", "--config", required=True, type=str, help="Config (*.toml).")
     args = parser.parse_args()
 
     # config device
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(device)
+    print("Device:", device)
 
     # get config
     config = toml.load(args.config)
@@ -438,6 +448,14 @@ if __name__ == "__main__":
         kernel_num=config["model"]["kernel_num"],
         kernel_size=config["model"]["kernel_size"],
     )
+    
+    '''
+    if device == "cuda" and torch.cuda.device_count() > 1:
+        print("Using", torch.cuda.device_count(), "GPUs with DataParallel.")
+        model = torch.nn.DataParallel(model)
+
+    model = model.to(device)
+    '''
 
     # trainer
     trainer = BaseTrainer(config, model, train_iter, valid_iter, device)

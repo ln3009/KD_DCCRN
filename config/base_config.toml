@@ -1,22 +1,22 @@
 [meta]
 use_cudnn = false
-use_amp = true
+use_amp = false
 
 [ppl]
 n_folds = 1
 n_jobs = 8
 
 [path]
-# base = "./output/dccrn"
-base = "/model/dccrn"
-pre_model = 0
-# pre_model = "/model/dccrn/checkpoints/base/latest_model.pth"
+base = "../model/dccrn"
+# pre_model = 0
+pre_model = "../model/dccrn/checkpoints/base/best_model.pth"
+# pre_model = "./backup/base_model.pth"
 
 [visual]
 samples = 2
 
 [checkpoint]
-save_interval = 1
+save_interval = 10
 
 [optimizer]
 name = "Adam"
@@ -31,11 +31,12 @@ mode = "min"
 factor = 0.8
 patience = 1
 threshold = 1e-3
-min_lr = 1e-5
+min_lr = 1e-6
 verbose = true
 
 [dataloader]
-batch_size = [130, 40]
+# batch_size = [130, 40]
+batch_size = [32, 4]
 num_workers = 8
 drop_last = false
 pin_memory = false
@@ -58,5 +59,5 @@ kernel_size = 5
 [train]
 resume = false
 epochs = 9999
-valid_start_epoch = 300
-valid_interval = 1
+valid_start_epoch = 10
+valid_interval = 10

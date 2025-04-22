@@ -132,7 +132,8 @@ class BaseInferencer(BaseTrainer):
         # visual metrics and get valid score
         self.save_metrics(enh_list, clean_list, n_folds=self.n_folds, n_jobs=self.n_jobs)
         # save audio
-        self.save_audio(enh_list, enh_files, n_folds=self.n_folds, n_jobs=self.n_jobs)
+        num_to_save = 10
+        self.save_audio(enh_list[:num_to_save], enh_files[:num_to_save], n_folds=self.n_folds, n_jobs=self.n_jobs)
 
     def __call__(self):
         # init logs
