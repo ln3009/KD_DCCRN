@@ -19,6 +19,8 @@ from audio.utils import prepare_empty_path
 
 class KnowledgeDistillationTrainer(BaseTrainer):
     def __init__(self, config, teacher_model, model, train_iter, valid_iter, device="cpu"):
+        #  the config is config of student
+
         super().__init__(config, model, train_iter, valid_iter, device=device)
         # get teacher model
         self.teacher_model = teacher_model
@@ -28,8 +30,8 @@ class KnowledgeDistillationTrainer(BaseTrainer):
         self.v = config["knowledge_distillation"]["v"]
 
         # reconfig path
-        self.checkpoints_path = os.path.join(self.base_path, "checkpoints", "knowledge_distillation")
-        self.logs_path = os.path.join(self.base_path, "logs", "train", "knowledge_distillation")
+        self.checkpoints_path = os.path.join(self.base_path, "checkpoints", "knowledge_distillation_response2")
+        self.logs_path = os.path.join(self.base_path, "logs", "train", "knowledge_distillation_response2")
         # mkdir path
         prepare_empty_path([self.checkpoints_path, self.logs_path], self.resume)
 
@@ -62,7 +64,7 @@ class KnowledgeDistillationTrainer(BaseTrainer):
         teacher_loss = self.loss(teacher_enh, clean)
         student_loss = self.loss(student_enh, clean)
         bounded_loss = student_loss if student_loss / teacher_loss < self.margin else 0
-        loss = student_loss + self.v * bounded_loss
+        loss = (1-self.v) * student_loss + self.v * bounded_loss
         return loss
 
     def train_epoch(self, epoch):
@@ -100,6 +102,11 @@ class KnowledgeDistillationTrainer(BaseTrainer):
 
 
 if __name__ == "__main__":
+    '''
+    python trainer/knowledge_distillation_trainer.py \
+>   -TC config/base_config.toml \
+>   -SC config/lite_v1_config.toml
+    '''
     parser = argparse.ArgumentParser(description="knowledge distillation trainer")
     parser.add_argument("-TC", "--teacher_config", required=True, type=str, help="Teacher Config (*.toml).")
     parser.add_argument("-SC", "--student_config", required=True, type=str, help="Student Config (*.toml).")
@@ -155,7 +162,7 @@ if __name__ == "__main__":
         pin_memory=pin_memory,
     )
 
-    # config teacher model
+    # config student model
     model = globals().get(config["model"]["name"])(
         n_fft=config["dataset"]["n_fft"],
         rnn_layers=config["model"]["rnn_layers"],
