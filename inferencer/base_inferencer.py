@@ -25,9 +25,9 @@ class BaseInferencer(BaseTrainer):
     def __init__(self, config, model, test_iter, device="cpu"):
         super().__init__(config, model, test_iter, test_iter, device=device)
         # init path
-        self.output_path = os.path.join(self.base_path, "enhanced", "base")
-        self.logs_path = os.path.join(self.base_path, "logs", "inference", "base")
-        self.metrics_path = os.path.join(self.base_path, "metrics", "base")
+        self.output_path = os.path.join(self.base_path, "enhanced", "knowledge_distillation_response1_x1_16")
+        self.logs_path = os.path.join(self.base_path, "logs", "inference", "knowledge_distillation_response1_x1_16")
+        self.metrics_path = os.path.join(self.base_path, "metrics", "knowledge_distillation_response1_x1_16")
         # mkdir path
         prepare_empty_path([self.output_path, self.logs_path, self.metrics_path])
 
@@ -150,6 +150,7 @@ class BaseInferencer(BaseTrainer):
 
 
 if __name__ == "__main__":
+    # python inferencer/base_inferencer.py -C config/base_config.toml
     parser = argparse.ArgumentParser(description="knowledge distillation trainer")
     parser.add_argument("-C", "--config", required=True, type=str, help="Config (*.toml).")
     args = parser.parse_args()

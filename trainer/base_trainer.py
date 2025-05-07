@@ -87,8 +87,8 @@ class BaseTrainer:
         self.best_score = 0.0
 
         # init path
-        self.checkpoints_path = os.path.join(self.base_path, "checkpoints", "base")
-        self.logs_path = os.path.join(self.base_path, "logs", "train", "base")
+        self.checkpoints_path = os.path.join(self.base_path, "checkpoints", "base_x1_16")
+        self.logs_path = os.path.join(self.base_path, "logs", "train", "base_x1_16")
         # mkdir path
         prepare_empty_path([self.checkpoints_path, self.logs_path], self.resume)
 
@@ -372,11 +372,13 @@ class BaseTrainer:
 
         # loop train
         for epoch in range(self.start_epoch, self.epochs + 1):
-            print(f"{'=' * 20} {epoch} epoch start {'=' * 20}")
-
+            print(f"{'=' * 20} {epoch} epoch start {'=' * 20}")            
+            
             self.set_model_to_train_mode()
             self.train_epoch(epoch)
 
+            torch.cuda.empty_cache()
+            
             if self.save_checkpoint_interval != 0 and (epoch % self.save_checkpoint_interval == 0):
                 self.save_checkpoint(epoch)
 

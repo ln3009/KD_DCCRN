@@ -8,8 +8,8 @@ n_jobs = 8
 
 [path]
 base = "../model/dccrn"
-# pre_model = 0
-pre_model = "../model/dccrn/checkpoints/base/best_model.pth"
+pre_model = 0
+# pre_model = "../model/dccrn/checkpoints/knowledge_distillation_response1_x1_16/best_model.pth"
 # pre_model = "./backup/base_model.pth"
 
 [visual]
@@ -35,8 +35,7 @@ min_lr = 1e-6
 verbose = true
 
 [dataloader]
-# batch_size = [130, 40]
-batch_size = [32, 4]
+batch_size = [64, 16]
 num_workers = 8
 drop_last = false
 pin_memory = false
