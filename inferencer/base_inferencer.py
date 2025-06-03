@@ -119,9 +119,6 @@ class BaseInferencer(BaseTrainer):
             enh_list = np.concatenate([enh_list, enh], axis=0) if len(enh_list) else enh
             noisy_files = np.concatenate([noisy_files, noisy_file], axis=0) if len(noisy_files) else noisy_file
 
-        # update learning rate
-        self.scheduler.step(loss_total / len(self.valid_iter))
-
         # visual audio
         for i in range(self.visual_samples):
             self.audio_visualization(noisy_list[i], clean_list[i], enh_list[i], os.path.basename(noisy_files[i]), epoch)

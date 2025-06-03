@@ -9,14 +9,12 @@ n_jobs = 8
 [path]
 base = "../model/dccrn"
 pre_model = 0
-# pre_model = "../model/dccrn/checkpoints/knowledge_distillation_response1_x1_16/best_model.pth"
-# pre_model = "./backup/base_model.pth"
 
 [visual]
 samples = 2
 
 [checkpoint]
-save_interval = 10
+save_interval = 1
 
 [optimizer]
 name = "Adam"
@@ -31,11 +29,11 @@ mode = "min"
 factor = 0.8
 patience = 5
 threshold = 1e-3
-min_lr = 1e-6
+min_lr = 1e-5
 verbose = true
 
 [dataloader]
-batch_size = [64, 8]
+batch_size = [32, 16]
 num_workers = 8
 drop_last = false
 pin_memory = false
@@ -50,9 +48,9 @@ limit = 0
 
 [model]
 name = "DCCRN"
-rnn_units = 256
+rnn_units = 128
 rnn_layers = 2
-kernel_num = [2, 32, 64, 128, 256, 256, 256]
+kernel_num = [2, 16, 32, 64, 128, 128, 128]
 kernel_size = 5
 
 [train]
@@ -60,3 +58,9 @@ resume = false
 epochs = 9999
 valid_start_epoch = 10
 valid_interval = 10
+
+[knowledge_distillation]
+teacher_model = "./backup/base_model.pth"
+# student_model, use pre_model
+v = 0.4
+temperature = 6.0

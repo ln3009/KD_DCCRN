@@ -350,8 +350,8 @@ class BaseTrainer:
             enh_list, clean_list, epoch, n_folds=self.n_folds, n_jobs=self.n_jobs
         )
 
-        # # update learning rate
-        # self.update_scheduler(loss_total / len(self.valid_iter))
+        # update learning rate
+        self.update_scheduler(loss_total / len(self.valid_iter))
 
         return metrics_score
 
@@ -398,6 +398,7 @@ class BaseTrainer:
 
 if __name__ == "__main__":
     # when first tarining , you should prepare the dataset, run unzip.py and gen.py
+
     # python trainer/base_trainer.py -C config/base_config.toml
     # tensorboard --logdir logs/train/base
     
@@ -452,13 +453,6 @@ if __name__ == "__main__":
         kernel_size=config["model"]["kernel_size"],
     )
     
-    '''
-    if device == "cuda" and torch.cuda.device_count() > 1:
-        print("Using", torch.cuda.device_count(), "GPUs with DataParallel.")
-        model = torch.nn.DataParallel(model)
-
-    model = model.to(device)
-    '''
 
     # trainer
     trainer = BaseTrainer(config, model, train_iter, valid_iter, device)
