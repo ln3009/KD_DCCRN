@@ -104,8 +104,15 @@ class DCCRN(nn.Module):
         out_imag = torch.cat([decoder_in_imag, encoder_out_imag], axis=1)
         return torch.cat([out_real, out_imag], axis=1)
 
-    def forward(self, noisy_spec):
-        # input [B, F, T, 2]
+    def forward(self, noisy_spec, return_features: bool = False):
+        """
+        Args:
+            noisy_spec: Tensor, [B, F, T, 2]
+            return_features: bool, 是否同时返回中间层特征列表
+        Returns:
+            mask: Tensor, [B, 2, F, T]（估计的 complex mask）
+            features (optional): List[Tensor], encoder/RNN/decoder 各层的输出
+        """
 
         # [B, F, T, 2] -> [B, 2, F, T]
         noisy_spec = noisy_spec.permute(0, 3, 1, 2)
@@ -115,22 +122,29 @@ class DCCRN(nn.Module):
 
         # encoder
         encoder_out = []
+        features = []
         for i, layer in enumerate(self.encoder):
             out = layer(out)
             encoder_out.append(out)
+            features.append(out)
 
         # rnn
         out = self.rnn(out)
+        features.append(out)
 
         # decoder
         for i, layer in enumerate(self.decoder):
             out = self.skip_connect(out, encoder_out[-1 - i])
             out = layer(out)[:, :, :, 1:]
+            features.append(out)
 
         # mask [B, 2, F, T]
         mask = F.pad(out, [0, 0, 1, 0])
 
-        return mask
+        if return_features:
+            return mask, features
+        else:
+            return mask
 
 
 if __name__ == "__main__":
@@ -148,9 +162,11 @@ if __name__ == "__main__":
     X = torch.randn([1, 257, 401, 2])
     # print network
     summary(model, input_size=tuple(X.shape))
-    # forward
+    # 默认不返回特征
     mask = model(X)
-
+    # 返回特征的测试
+    mask2, feats = model(X, return_features=True)
+    print(f"Number of collected feature maps: {len(feats)}")    
     print(f"Test DCCRN Module End...")
 
     pass

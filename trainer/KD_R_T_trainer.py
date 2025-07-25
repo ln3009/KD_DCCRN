@@ -37,13 +37,13 @@ class KD_R_T_Trainer(BaseTrainer):
         self.T = config["knowledge_distillation"]["temperature"]    # KD Temperature
 
         # reconfig path
-        self.checkpoints_path = os.path.join(self.base_path, "checkpoints", "KD_R_T_x1_4")
-        self.logs_path = os.path.join(self.base_path, "logs", "train", "KD_R_T_x1_4")
+        self.checkpoints_path = os.path.join(self.base_path, "checkpoints", "KD_R_T25_x1_16_2")
+        self.logs_path = os.path.join(self.base_path, "logs", "train", "KD_R_T25_x1_16_2")
         # mkdir path
         prepare_empty_path([self.checkpoints_path, self.logs_path], self.resume)
 
         # 加载教师模型
-         # to device
+        # to device
         self.teacher_model = self.teacher_model.to(self.device)
         # load teacher model
         self.load_teacher_model()
@@ -121,7 +121,7 @@ class KD_R_T_Trainer(BaseTrainer):
 
 if __name__ == "__main__":
     '''
-    python trainer/KD_R_T_trainer.py   -TC config/base_config.toml   -SC config/KD_R_T_config.toml  --gpu 1
+    python trainer/KD_R_T_trainer.py   -TC config/base_config.toml   -SC config/KD_R_T_config.toml  --gpu 0
     '''
     parser = argparse.ArgumentParser(description="Knowledge Distillation with Response & Temperature")
     parser.add_argument("-TC", "--teacher_config", required=True, type=str, help="Teacher Config (*.toml).")

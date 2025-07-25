@@ -1,0 +1,31 @@
+[paths]
+data_root    = "../data/cws"
+noisy_folder = "cws_talk"
+model_root   = "../model/dccrn/checkpoints"
+output_path  = "../data/cws/output"
+
+# 新增：由于各个模型参数量不一致，只测试这些子文件夹里的模型
+model_list = [
+  "base_x1_16",
+  "KD_R_margin_x1_16",
+  "KD_R_T6_x1_16",
+  "KD_R_T25_x1_16"
+]
+
+
+[dataset]
+sr = 16000
+n_fft = 512
+
+[stft]
+n_fft = 512
+win_len = 480
+hop_len = 120
+
+
+[model]
+name = "DCCRN"
+rnn_units = 64
+rnn_layers = 2
+kernel_num = [2, 8, 16, 32, 64, 64, 64]
+kernel_size = 5

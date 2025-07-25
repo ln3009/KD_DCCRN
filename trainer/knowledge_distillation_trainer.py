@@ -30,8 +30,8 @@ class KnowledgeDistillationTrainer(BaseTrainer):
         self.v = config["knowledge_distillation"]["v"]
 
         # reconfig path
-        self.checkpoints_path = os.path.join(self.base_path, "checkpoints", "KD_R_margin_x1_16")
-        self.logs_path = os.path.join(self.base_path, "logs", "train", "KD_R_margin_x1_16")
+        self.checkpoints_path = os.path.join(self.base_path, "checkpoints", "KD_R_margin_x1_16_2")
+        self.logs_path = os.path.join(self.base_path, "logs", "train", "KD_R_margin_x1_16_2")
         # mkdir path
         prepare_empty_path([self.checkpoints_path, self.logs_path], self.resume)
 
