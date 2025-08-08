@@ -65,8 +65,8 @@ def audio_istft(mask, spec, n_fft, hop_len, win_len, window):
 def evaluate_model(config_path,gpu_id):
     # config
     runs = 2
-    save_path = "./mytest/eval_metrics_KD_F_fitnets_x1_16_0.9.csv"
-    model_path = "../model/dccrn/checkpoints/fitnets_x1_16_0.9/best_model.pth"
+    save_path = "./mytest/eval_metrics_KD_F_fitnets_x1_16_0.9_2.csv"
+    model_path = "../model/dccrn/checkpoints/fitnets_x1_16_0.9_2/best_model.pth"
 
     # 1) Load config
     cfg = toml.load(config_path)
@@ -195,7 +195,7 @@ if __name__ == "__main__":
         help="指定要使用的 GPU 编号 (例如 0, 1, 2, …)，如果只有 CPU 可用则忽略。"
     )
 
-    ## python mytest/val_metrics.py -C config/base_config_test.toml --gpu 1
+    ## python mytest/val_metrics.py -C config/base_config_test.toml --gpu 2
     args = parser.parse_args()
 
     evaluate_model(args.config, args.gpu)

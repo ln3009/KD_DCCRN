@@ -1,5 +1,13 @@
+# feature.py
 # -*- coding: utf-8 -*-
 
+"""
+功能：
+- 提供音频信号预处理功能，包括裁剪检测与随机采样补零。
+- 主要接口：
+  - IsClipped: 判断音频信号是否发生裁剪。
+  - SubSample: 随机截取或补齐固定长度的音频片段。
+"""
 import numpy as np
 
 EPS = np.finfo(np.float32).eps
