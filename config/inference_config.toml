@@ -1,0 +1,31 @@
+[meta]
+use_cudnn = false
+use_amp = false
+
+[path]
+# 模型权重文件路径（必须填写）
+model_checkpoint = "../model/dccrn/checkpoints/KD_R_margin_x1_16_2/best_model.pth"
+
+[visual]
+samples = 2
+
+[dataloader]
+batch_size = 1  # 推理时batch_size设为1
+num_workers = 0
+drop_last = false
+pin_memory = false
+
+[dataset]
+sr = 16000
+n_fft = 512
+win_len = 480
+hop_len = 120
+audio_len = 3.0
+limit = 0
+
+[model]
+name = "DCCRN"
+rnn_units = 64
+rnn_layers = 2
+kernel_num = [2, 8, 16, 32, 64, 64, 64]
+kernel_size = 5

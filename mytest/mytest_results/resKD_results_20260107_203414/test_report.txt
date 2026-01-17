@@ -1,0 +1,27 @@
+==================================================
+resKD 音频增强测试报告
+测试时间: 2026-01-07 20:34:55
+配置文件: config/inference_config.toml
+模型文件: ../model/dccrn/checkpoints/KD_R_margin_x1_16_2/best_model.pth
+==================================================
+
+测试: snr_0db
+  SNR级别: 0dB
+  干净音频: mytest/TestData/clean_speech.wav
+  带噪音频: mytest/TestData/noisy_speech_snr0dB.wav
+  增强音频: mytest/mytest_results/resKD_results_20260107_203414/enhanced_snr0dB.wav
+  SI-SDR指标: 0.00 dB
+  对比图: mytest/mytest_results/resKD_results_20260107_203414/comparison_snr0dB.png
+  音频长度: 320000 样本点
+  音频时长: 20.00 秒
+
+测试: snr_5db
+  SNR级别: 5dB
+  干净音频: mytest/TestData/clean_speech.wav
+  带噪音频: mytest/TestData/noisy_speech_snr5dB.wav
+  增强音频: mytest/mytest_results/resKD_results_20260107_203414/enhanced_snr5dB.wav
+  SI-SDR指标: 0.00 dB
+  对比图: mytest/mytest_results/resKD_results_20260107_203414/comparison_snr5dB.png
+  音频长度: 320000 样本点
+  音频时长: 20.00 秒
+

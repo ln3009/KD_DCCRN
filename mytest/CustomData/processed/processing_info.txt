@@ -1,0 +1,12 @@
+=== 音频处理信息 ===
+干净语音文件: Fight of Your Life.mp3
+噪声文件: babble.wav
+采样率: 16000 Hz
+片段时长: 20 秒
+干净语音起始时间: 10 秒
+目标信噪比: 5 dB
+实际信噪比: 5.00 dB
+生成文件:
+  1. clean_speech.wav (干净语音)
+  2. noise_segment.wav (噪声片段)
+  3. noisy_speech_snr5dB.wav (带噪语音)

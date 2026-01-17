@@ -33,7 +33,7 @@ min_lr = 1e-6
 verbose = true
 
 [dataloader]
-batch_size = [64, 16]
+batch_size = [32, 16]
 num_workers = 8
 drop_last = false
 pin_memory = false

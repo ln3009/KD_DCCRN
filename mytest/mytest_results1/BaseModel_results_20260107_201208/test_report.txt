@@ -1,0 +1,17 @@
+==================================================
+BaseModel 音频增强测试报告
+测试时间: 2026-01-07 20:12:29
+配置文件: config/inference_config.toml
+模型文件: ./backup/base_model.pth
+==================================================
+
+测试: snr_0db
+  SNR级别: 0dB
+  干净音频: mytest/TestData1/clean_speech.wav
+  带噪音频: mytest/TestData1/noisy_speech_snr0dB.wav
+  增强音频: mytest/mytest_results1/BaseModel_results_20260107_201208/enhanced_snr0dB.wav
+  SI-SDR指标: -5.07 dB
+  对比图: mytest/mytest_results1/BaseModel_results_20260107_201208/comparison_snr0dB.png
+  音频长度: 480000 样本点
+  音频时长: 30.00 秒
+

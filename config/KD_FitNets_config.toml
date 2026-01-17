@@ -33,7 +33,7 @@ min_lr = 1e-5
 verbose = true
 
 [dataloader]
-batch_size = [16, 8]
+batch_size = [32, 8]
 num_workers = 8
 drop_last = false
 pin_memory = false
@@ -60,7 +60,7 @@ valid_start_epoch = 10
 valid_interval = 10
 
 [knowledge_distillation]
-# teacher_model = "./backup/base_model.pth"
-teacher_model = "../model/dccrn/checkpoints/fitnets_x1_4_0.9/best_model.pth"
+teacher_model = "./backup/base_model.pth"
+# teacher_model = "../model/dccrn/checkpoints/fitnets_x1_4_0.9/best_model.pth"
 # student_model, use pre_model
-v = 0.9
+v = 0.95
